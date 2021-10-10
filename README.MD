@@ -8,6 +8,7 @@ Enki is a Markdown to PDF conversion tool that collates multiple Markdown files 
 * Install WeasyPrint using `sudo apt-get install build-essential python3-dev python3-pip python3-setuptools python3-wheel python3-cffi libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf2.0-0 libffi-dev shared-mime-info
 ` or your system's equivalent command
     * See [WeasyPrint's documentation](https://doc.courtbouillon.org/weasyprint/v52.5/install.html) for more details.
+* Install BeautifulSoup with `sudo apt-get install python3-bs4` or your system's equivalent command.
 * Install the Python requirements using `pip3 install -r requirements.txt` while in the enki folder.
 
 

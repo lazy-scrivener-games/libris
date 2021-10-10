@@ -8,6 +8,7 @@ for details.
 """
 import argparse
 import json
+import os
 import jsonschema
 from lib.constants import JSON_SCHEMA_PATH
 from lib.pdf_builder import build_pdf
@@ -21,7 +22,8 @@ def main(config_file_path: str) -> None:
     """
     try:
         config = get_json_data(config_file_path)
-        schema = get_json_data(JSON_SCHEMA_PATH)
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        schema = get_json_data(os.path.join(dir_path, JSON_SCHEMA_PATH))
         jsonschema.validate(config, schema)
     except jsonschema.exceptions.ValidationError as err:
         print(err)
