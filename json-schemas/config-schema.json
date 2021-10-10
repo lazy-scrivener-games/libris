@@ -1,0 +1,34 @@
+{
+    "$schema": "http://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/lazy-scrivener-games/enki/json-schemas/config-schema.json",
+    "title":  "EnkiConfig",
+    "description": "The overall configuration object for an Enki run",
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "description": "Schema used for config file.",
+            "type": "string"
+        },
+        "sources": {
+            "description": "Markdown files to be included in PDF output.",
+            "$ref": "./sources-schema.json"
+        },
+        "styles": {
+            "description": "Style definitions for PDF.",
+            "$ref": "./styles-schema.json"
+        },
+        "defaultStyle": {
+            "description": "Default style for markdown files.",
+            "type": "string"
+        },
+        "output": {
+            "description": "Where to write the resulting PDF.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "sources",
+        "output"
+    ],
+    "additionalProperties": false
+}

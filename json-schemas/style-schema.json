@@ -1,0 +1,13 @@
+{
+    "$schema": "http://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/lazy-scrivener-games/enki/json-schemas/style-schema.json",
+    "title": "EnkiStyle",
+    "description": "A style definition for an Enki configuration file.",
+    "type": [
+        "string",
+        "array"
+    ],
+    "items": {
+        "type": "string"
+    }
+}

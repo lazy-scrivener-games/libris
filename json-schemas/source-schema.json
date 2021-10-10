@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/lazy-scrivener-games/enki/json-schemas/source-schema.json",
+    "title": "EnkiSource",
+    "description": "A markdown source definition for an Enki configuration file.",
+    "type": [
+        "object",
+        "string"
+    ],
+    "properties": {
+        "source": {
+            "description": "Markdown file to be included in PDF output.",
+            "type": "string"
+        },
+        "style": {
+            "description": "Style definition to be used for this markdown file.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "source"
+    ]
+}

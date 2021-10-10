@@ -1,0 +1,11 @@
+{
+    "$schema": "http://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/lazy-scrivener-games/enki/json-schemas/sources-schema.json",
+    "title": "EnkiSources",
+    "description": "A list of sources for an EnkiConfig.",
+    "type": "array",
+    "items": {
+        "$ref": "./source-schema.json"
+    },
+    "minItems": 1
+}
