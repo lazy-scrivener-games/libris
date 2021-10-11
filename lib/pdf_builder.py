@@ -152,6 +152,12 @@ def generate_pdf(
 def gather_pages(pdfs: list) -> list:
     """
     Creates a list of pages from a list of PDFs.
+
+    Args:
+        pdfs (list): List of PDFs to collate.
+
+    Returns:
+        list: List of pages from all passed PDFs.
     """
     output = []
     for pdf in pdfs:
