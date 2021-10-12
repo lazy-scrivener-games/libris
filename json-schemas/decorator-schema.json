@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/lazy-scrivener-games/enki/json-schemas/decorator-schema.json",
+    "title": "EnkiDecorator",
+    "description": "A decorator definition for an Enki configuration file.",
+    "type": [
+        "object"
+    ],
+    "properties": {
+        "template": {
+            "description": "HTML template to be used as the decorator template.",
+            "type": "string"
+        },
+        "stylesheet": {
+            "description": "CSS stylesheet to be used for this decorator.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "template",
+        "stylesheet"
+    ],
+    "additionalProperties": false
+}

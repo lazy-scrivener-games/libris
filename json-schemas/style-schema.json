@@ -5,9 +5,79 @@
     "description": "A style definition for an Enki configuration file.",
     "type": [
         "string",
-        "array"
+        "array",
+        "object"
     ],
-    "items": {
-        "type": "string"
-    }
+    "items": "string",
+    "properties": {
+        "stylesheet": {
+            "description": "Stylesheet to be used for this style.",
+            "type": "string"
+        },
+        "stylesheets": {
+            "description": "List of stylesheets to be used for this style.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "decorator": {
+            "description": "Decorator definition for this style.",
+            "$ref": "./decorator-schema.json"
+        },
+        "decorators": {
+            "description": "List of decorator definitions for this style.",
+            "type": "array",
+            "items": {
+                "$ref": "./decorator-schema.json"
+            }
+        }
+    },
+    "allOf": [
+        {
+            "oneOf": [
+                {
+                    "type": "object",
+                    "required": [
+                        "stylesheet"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "required": [
+                        "stylesheets"
+                    ]
+                },
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array"
+                }
+            ]
+        },
+        {
+            "oneOf": [
+                {
+                    "type": "object",
+                    "required": [
+                        "decorator"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "required": [
+                        "decorators"
+                    ]
+                },
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array"
+                }
+            ]
+        }
+    ],
+    "additionalProperties": false
 }
