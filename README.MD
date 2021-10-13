@@ -21,3 +21,7 @@ Enki is a Markdown to PDF conversion tool that collates multiple Markdown files 
     * If you set the `$schema` property of your configuration object to point to the `config-schema.json` file you will get auto-complete in any IDE or text editor that support JSON Schema validation.
 * Run `python3 enki.py <CONFIG_FILE_PATH>`
 * Check the resulting PDF output!
+
+## Options
+
+* Adding `--watch` or `-w` will watch the config file and all files it points to, re-building the PDF whenever they change. Example: `python3 enki.py --watch example/example-config.json`
