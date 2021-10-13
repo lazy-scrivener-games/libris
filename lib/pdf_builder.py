@@ -97,15 +97,33 @@ def add_decorators(pdf: Document, decorator_data: list, count: int, variables: d
     for page in pdf.pages:
         for decorator in decorator_data:
             final_html_string = process_decorator_template(decorator['html'], count, variables)
-            html = HTML(string=final_html_string)
-            stylesheet = decorator['css']
-            doc = html.render(stylesheets=[stylesheet])
+            html = HTML(string=final_html_string, base_url='.')
+            stylesheets = get_stylesheets_for_decorator(decorator, count)
+            doc = html.render(stylesheets=stylesheets)
             decorator_page = doc.pages[0]
             decorator_body = get_element(decorator_page._page_box.all_children(), 'body')
             decorator = decorator_body.copy_with_children(decorator_body.all_children())
             body = get_element(page._page_box.all_children(), 'body')
             body.children += decorator_body.all_children()
-            count += 1
+        count += 1
+
+def get_stylesheets_for_decorator(decorator: dict, count: int) -> list:
+    """
+    Gets stylesheets for a decorator.
+
+    Args:
+        decorator (dict): Decorator config object.
+        count (int): Current page count.
+
+    Returns:
+        list: List of CSS documents that apply to current usage of decorator.
+    """
+    stylesheets = [decorator['css']]
+    if 'evenCss' in decorator and count % 2 == 0:
+        stylesheets.append(decorator['evenCss'])
+    elif 'oddCss' in decorator and count % 2 != 0:
+        stylesheets.append(decorator['oddCss'])
+    return stylesheets
 
 def process_decorator_template(template: str, count: int, variables: dict) -> str:
     """

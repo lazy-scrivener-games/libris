@@ -58,7 +58,7 @@ def get_output_from_source(item: any, document_wrapper_class: str) -> dict:
         html = markdown_path(item['source'])
     if document_wrapper_class:
         html = wrap_with_tag(html, document_wrapper_class)
-    html_object = HTML(string=html)
+    html_object = HTML(string=html, base_url='.')
     item_output['html'] = html_object
     return item_output
 
@@ -186,7 +186,12 @@ def get_decorator_data(decorator: dict) -> dict:
     """
     with open(decorator['template'], 'r') as template_file:
         html = template_file.read()
-    return {
+    output = {
         'html': html,
         'css': CSS(filename=decorator['stylesheet'])
     }
+    if 'evenStylesheet' in decorator:
+        output['evenCss'] = CSS(filename=decorator['evenStylesheet'])
+    if 'oddStylesheet' in decorator:
+        output['oddCss'] = CSS(filename=decorator['oddStylesheet'])
+    return output

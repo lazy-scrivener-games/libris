@@ -14,6 +14,14 @@
         "stylesheet": {
             "description": "CSS stylesheet to be used for this decorator.",
             "type": "string"
+        },
+        "evenStylesheet": {
+            "description": "CSS stylesheet to be used for this decorator only on even pages.",
+            "type": "string"
+        },
+        "oddStylesheet": {
+            "description": "CSS stylesheet to be used for this decorator only on odd pages.",
+            "type": "string"
         }
     },
     "required": [
