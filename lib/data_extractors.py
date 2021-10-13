@@ -1,11 +1,12 @@
 """
 Configuration data extraction functions for Enki.
 """
+from typing import Union
 from bs4 import BeautifulSoup
 from markdown2 import markdown_path
 from weasyprint import HTML, CSS
 
-def get_default_style(default_style_key: str, css_data: dict) -> any:
+def get_default_style(default_style_key: str, css_data: dict) -> Union[list, None]:
     """
     Retrieves the default style from the CSS list.
 
@@ -183,7 +184,9 @@ def get_decorator_data(decorator: dict) -> dict:
     Returns:
         dict: Dictionary containing 'html' and 'css' keys for that decorator.
     """
+    with open(decorator['template'], 'r') as template_file:
+        html = template_file.read()
     return {
-        'html': HTML(filename=decorator['template']),
+        'html': html,
         'css': CSS(filename=decorator['stylesheet'])
     }

@@ -15,6 +15,10 @@
         "style": {
             "description": "Style definition to be used for this markdown file.",
             "type": "string"
+        },
+        "variables": {
+            "description": "Variables to be passed to decorator templates.",
+            "type": "object"
         }
     },
     "required": [
