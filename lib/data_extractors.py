@@ -1,10 +1,26 @@
 """
 Configuration data extraction functions for Enki.
 """
+import json
 from typing import Union
 from bs4 import BeautifulSoup
 from markdown2 import markdown_path
 from weasyprint import HTML, CSS
+
+def get_json_data(json_file_path: str) -> dict:
+    """
+    Retrieves JSON from the given file.
+
+    Args:
+        json_file_path (str): The JSON file to read.
+
+    Returns:
+        dict: Dictionary representation of JSON file.
+    """
+    with open(json_file_path, 'r') as json_file:
+        json_string = json_file.read()
+        json_object = json.loads(json_string)
+        return json_object
 
 def get_default_style(default_style_key: str, css_data: dict) -> Union[list, None]:
     """
