@@ -4,7 +4,7 @@ Defines the core PDF building functions for enki.
 from typing import Union
 import jinja2 
 from weasyprint import HTML, Document
-from lib.data_extractors import (
+from enki.lib.data_extractors import (
     get_css_data, get_decorator_data_from_styles_dict, get_default_style, get_html_data
 )
 

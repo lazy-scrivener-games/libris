@@ -5,8 +5,8 @@ import os
 import time
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
-from lib.data_extractors import get_json_data
-from lib.pdf_builder import build_pdf
+from enki.lib.data_extractors import get_json_data
+from enki.lib.pdf_builder import build_pdf
 
 class WatchEventHandler(FileSystemEventHandler):
     """

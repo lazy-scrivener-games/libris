@@ -9,8 +9,7 @@ Enki is a Markdown to PDF conversion tool that collates multiple Markdown files 
 ` or your system's equivalent command
     * See [WeasyPrint's documentation](https://doc.courtbouillon.org/weasyprint/v52.5/install.html) for more details.
 * Install BeautifulSoup with `sudo apt-get install python3-bs4` or your system's equivalent command.
-* Install the Python requirements using `pip3 install -r requirements.txt` while in the enki folder.
-
+* Go into the top-level project folder and install the module using pip3 install .
 
 ## Usage
 
@@ -19,9 +18,9 @@ Enki is a Markdown to PDF conversion tool that collates multiple Markdown files 
 * Create a configuration file.
     * More documentation will follow, but for now use `example/example-config.json` as an example configuration file, with the full schema documented in `json-schemas/config-schema.json`.
     * If you set the `$schema` property of your configuration object to point to the `config-schema.json` file you will get auto-complete in any IDE or text editor that support JSON Schema validation.
-* Run `python3 enki.py <CONFIG_FILE_PATH>`
+* Run `python3 -m enki <CONFIG_FILE_PATH>`
 * Check the resulting PDF output!
 
 ## Options
 
-* Adding `--watch` or `-w` will watch the config file and all files it points to, re-building the PDF whenever they change. Example: `python3 enki.py --watch example/example-config.json`
+* Adding `--watch` or `-w` will watch the config file and all files it points to, re-building the PDF whenever they change. Example: `python3 -m enki --watch example/example-config.json`
