@@ -68,10 +68,13 @@ def get_output_from_source(item: any, document_wrapper_class: str) -> dict:
     """
     item_output = {}
     if isinstance(item, str):
-        html = markdown_path(item, extras=['fenced-code-blocks', 'markdown-in-html'])
+        html = markdown_path(item, extras=['fenced-code-blocks', 'markdown-in-html', 'tables'])
     else:
         item_output = item
-        html = markdown_path(item['source'], extras=['fenced-code-blocks', 'markdown-in-html'])
+        html = markdown_path(
+            item['source'],
+            extras=['fenced-code-blocks', 'markdown-in-html', 'tables']
+        )
     if document_wrapper_class:
         html = wrap_with_tag(html, document_wrapper_class)
     html_object = HTML(string=html, base_url='.')
