@@ -14,6 +14,9 @@ setup(
     package_data={
         'enki': ['json-schemas/*'],
     },
+    scripts=[
+        'scripts/enki'
+    ],
     install_requires=[
         'beautifulsoup4 == 4.10.0',
         'Jinja2 == 3.0.2',
