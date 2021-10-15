@@ -159,9 +159,11 @@ def get_html_from_dict_with_source_directory(item: dict) -> 'tuple[str, dict]':
     """
     markdown_text = ''
     is_first = True
-    for file_entry in os.listdir(item['sourceDirectory']):
+    file_list = os.listdir(item['sourceDirectory'])
+    file_list.sort()
+    for file_entry in file_list:
         filename = os.path.join(item['sourceDirectory'], file_entry)
-        if os.path.isfile(filename) and filename.lower()[-3] == '.md':
+        if os.path.isfile(filename) and filename.lower().endswith('.md'):
             if not is_first:
                 markdown_text += '\n\n'
             is_first = False
