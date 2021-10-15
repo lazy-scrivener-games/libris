@@ -2,9 +2,10 @@
 Configuration data extraction functions for Enki.
 """
 import json
+import os
 from typing import Union
 from bs4 import BeautifulSoup
-from markdown2 import markdown_path
+from markdown2 import markdown_path, markdown
 from weasyprint import HTML, CSS
 
 def get_json_data(json_file_path: str) -> dict:
@@ -55,31 +56,119 @@ def get_html_data(sources: list, document_wrapper_class: str) -> list:
         output.append(item_output)
     return output
 
-def get_output_from_source(item: any, document_wrapper_class: str) -> dict:
+def get_output_from_source(item: Union[dict, str], document_wrapper_class: str) -> dict:
     """
     Gets a source configuration dictionary from a source dictionary or string.
 
     Args:
-        item (dict|str): Source configuration dictionary or string
+        item (Union[dict, str]): Source configuration dictionary or string
         document_wrapper_class (str): Optional div class with which to wrap HTML.
 
     Returns:
         dict: Configuration dictionary with parsed HTML.
     """
-    item_output = {}
-    if isinstance(item, str):
-        html = markdown_path(item, extras=['fenced-code-blocks', 'markdown-in-html', 'tables'])
-    else:
-        item_output = item
-        html = markdown_path(
-            item['source'],
-            extras=['fenced-code-blocks', 'markdown-in-html', 'tables']
-        )
+    html, item_output = get_html_from_source(item)
     if document_wrapper_class:
         html = wrap_with_tag(html, document_wrapper_class)
     html_object = HTML(string=html, base_url='.')
     item_output['html'] = html_object
     return item_output
+
+def get_html_from_source(item: Union[dict, str]) -> 'tuple[str, dict]':
+    """
+    Retrieves HTML from one or more markdown source files.
+
+    Args:
+        item (Union[dict, str]): Source configuration dictionary or string
+
+    Returns:
+        str: HTML result from one or more markdown files.
+        dict: Object for storage of the files' details for later processing.
+    """
+    if isinstance(item, str):
+        return get_html_from_string_source(item)
+    if 'source' in item:
+        return get_html_from_dict_with_source(item)
+    if 'sources' in item:
+        return get_html_from_dict_with_sources(item)
+    return get_html_from_dict_with_source_directory(item)
+
+def get_html_from_string_source(item: str) -> 'tuple[str, dict]':
+    """
+    Retrieves HTML from a markdown source file.
+
+    Args:
+        item (str): Source configuration string.
+
+    Returns:
+        str: HTML result from the markdown file.
+        dict: Object for storage of the file's details for later processing.
+    """
+    html = markdown_path(item, extras=['fenced-code-blocks', 'markdown-in-html', 'tables'])
+    return html, {}
+
+def get_html_from_dict_with_source(item: dict) -> 'tuple[str, dict]':
+    """
+    Retrieves HTML from a markdown source file.
+
+    Args:
+        item (dict): Source configuration dictionary.
+
+    Returns:
+        str: HTML result from a markdown file.
+        dict: Object for storage of the file's details for later processing.
+    """
+    html = markdown_path(
+        item['source'],
+        extras=['fenced-code-blocks', 'markdown-in-html', 'tables']
+    )
+    return html, item
+
+def get_html_from_dict_with_sources(item: dict) -> 'tuple[str, dict]':
+    """
+    Retrieves HTML from one or more markdown source files.
+
+    Args:
+        item (dict): Source configuration dictionary.
+
+    Returns:
+        str: HTML result from one or more markdown files.
+        dict: Object for storage of the files' details for later processing.
+    """
+    markdown_text = ''
+    is_first = True
+    for source in item['sources']:
+        if not is_first:
+            markdown_text += '\n\n'
+        is_first = False
+        with open(source, 'r') as markdown_file:
+            markdown_text += markdown_file.read()
+    html = markdown(markdown_text, extras=['fenced-code-blocks', 'markdown-in-html', 'tables'])
+    return html, item
+
+def get_html_from_dict_with_source_directory(item: dict) -> 'tuple[str, dict]':
+    """
+    Retrieves HTML from a directory of markdown source files.
+
+    Args:
+        item (dict): Source configuration dictionary.
+
+    Returns:
+        str: HTML result from one or more markdown files.
+        dict: Object for storage of the files' details for later processing.
+    """
+    markdown_text = ''
+    is_first = True
+    for file_entry in os.listdir(item['sourceDirectory']):
+        filename = os.path.join(item['sourceDirectory'], file_entry)
+        if os.path.isfile(filename) and filename.lower()[-3] == '.md':
+            if not is_first:
+                markdown_text += '\n\n'
+            is_first = False
+            with open(filename, 'r') as markdown_file:
+                markdown_text += markdown_file.read()
+    html = markdown(markdown_text, extras=['fenced-code-blocks', 'markdown-in-html', 'tables'])
+    return html, item
 
 def wrap_with_tag(html: str, document_wrapper_class: str) -> str:
     """

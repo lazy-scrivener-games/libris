@@ -7,7 +7,13 @@ setup(
     author='Chris Muller',
     author_email='chris@lazyscrivenergames.com',
     license='MIT',
-    packages=['enki'],
+    packages=[
+        'enki',
+        'enki.lib'
+    ],
+    package_data={
+        'enki': ['json-schemas/*'],
+    },
     install_requires=[
         'beautifulsoup4 == 4.10.0',
         'Jinja2 == 3.0.2',

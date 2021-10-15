@@ -1,5 +1,5 @@
 {
-    "$schema": "../json-schemas/config-schema.json",
+    "$schema": "../enki/json-schemas/config-schema.json",
     "sources": [
         "example/chapter1.md",
         "example/chapter2.md",

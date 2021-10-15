@@ -12,6 +12,17 @@
             "description": "Markdown file to be included in PDF output.",
             "type": "string"
         },
+        "sources": {
+            "description": "Markdown files to include in PDF output.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "sourceDirectory": {
+            "description": "Directory of markdown files to put together alphabetically.",
+            "type": "string"
+        },
         "style": {
             "description": "Style definition to be used for this markdown file.",
             "type": "string"
@@ -21,8 +32,28 @@
             "type": "object"
         }
     },
-    "required": [
-        "source"
+    "oneOf": [
+        {
+            "type": "string"
+        },
+        {
+            "type": "object",
+            "required": [
+                "source"
+            ]
+        },
+        {
+            "type": "object",
+            "required": [
+                "sources"
+            ]
+        },
+        {
+            "type": "object",
+            "required": [
+                "sourceDirectory"
+            ]
+        }
     ],
     "additionalProperties": false
 }
