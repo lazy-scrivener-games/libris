@@ -3,7 +3,7 @@ setup(
     name='enki',
     version='1.0.0',
     description='PDF generator that uses Markdown sources.',
-    url='https://github.com/lazy-scrivener-games/enki-dnd-style',
+    url='https://github.com/lazy-scrivener-games/enki',
     author='Chris Muller',
     author_email='chris@lazyscrivenergames.com',
     license='MIT',

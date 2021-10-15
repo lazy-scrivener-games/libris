@@ -1,7 +1,7 @@
 """
 Builds a PDF from a JSON configuration file that points to various Markdown source files.
 
-usage: enki.py <configuration_file>
+usage: enki <configuration_file>
 
 Where <configuration_file> is a JSON file that specifies how to build the PDF. View the full docs
 for details.
