@@ -3,9 +3,10 @@ Configuration data extraction functions for Enki.
 """
 import json
 import os
+import subprocess
 from typing import Union
 from bs4 import BeautifulSoup
-from markdown2 import markdown_path, markdown
+from markdown2 import markdown
 from weasyprint import HTML, CSS
 
 def get_json_data(json_file_path: str) -> dict:
@@ -39,7 +40,11 @@ def get_default_style(default_style_key: str, css_data: dict) -> Union[list, Non
         default_style = css_data[default_style_key]
     return default_style
 
-def get_html_data(sources: list, document_wrapper_class: str) -> list:
+def get_html_data(
+        sources: list,
+        document_wrapper_class: str,
+        markdown_pipe: Union[str, None]
+    ) -> list:
     """
     Retrieves Weasyprint HTML objects based on a list of Markdown filenames
 
@@ -52,11 +57,15 @@ def get_html_data(sources: list, document_wrapper_class: str) -> list:
     """
     output = []
     for item in sources:
-        item_output = get_output_from_source(item, document_wrapper_class)
+        item_output = get_output_from_source(item, document_wrapper_class, markdown_pipe)
         output.append(item_output)
     return output
 
-def get_output_from_source(item: Union[dict, str], document_wrapper_class: str) -> dict:
+def get_output_from_source(
+        item: Union[dict, str],
+        document_wrapper_class: str,
+        markdown_pipe: Union[str, None]
+    ) -> dict:
     """
     Gets a source configuration dictionary from a source dictionary or string.
 
@@ -67,14 +76,18 @@ def get_output_from_source(item: Union[dict, str], document_wrapper_class: str) 
     Returns:
         dict: Configuration dictionary with parsed HTML.
     """
-    html, item_output = get_html_from_source(item)
+    html, item_output = get_html_from_source(item, markdown_pipe)
     if document_wrapper_class:
         html = wrap_with_tag(html, document_wrapper_class)
+    print(html)
     html_object = HTML(string=html, base_url='.')
     item_output['html'] = html_object
     return item_output
 
-def get_html_from_source(item: Union[dict, str]) -> 'tuple[str, dict]':
+def get_html_from_source(
+        item: Union[dict, str],
+        markdown_pipe: Union[str, None]
+    ) -> 'tuple[str, dict]':
     """
     Retrieves HTML from one or more markdown source files.
 
@@ -86,14 +99,14 @@ def get_html_from_source(item: Union[dict, str]) -> 'tuple[str, dict]':
         dict: Object for storage of the files' details for later processing.
     """
     if isinstance(item, str):
-        return get_html_from_string_source(item)
+        return get_html_from_string_source(item, markdown_pipe)
     if 'source' in item:
-        return get_html_from_dict_with_source(item)
+        return get_html_from_dict_with_source(item, markdown_pipe)
     if 'sources' in item:
-        return get_html_from_dict_with_sources(item)
-    return get_html_from_dict_with_source_directory(item)
+        return get_html_from_dict_with_sources(item, markdown_pipe)
+    return get_html_from_dict_with_source_directory(item, markdown_pipe)
 
-def get_html_from_string_source(item: str) -> 'tuple[str, dict]':
+def get_html_from_string_source(item: str, markdown_pipe: Union[str, None]) -> 'tuple[str, dict]':
     """
     Retrieves HTML from a markdown source file.
 
@@ -104,10 +117,16 @@ def get_html_from_string_source(item: str) -> 'tuple[str, dict]':
         str: HTML result from the markdown file.
         dict: Object for storage of the file's details for later processing.
     """
-    html = markdown_path(item, extras=['fenced-code-blocks', 'markdown-in-html', 'tables'])
-    return html, {}
+    with open(item, 'r') as markdown_file:
+        text = markdown_file.read()
+        text = apply_pipe(text, markdown_pipe)
+        html = markdown(text, extras=['fenced-code-blocks', 'markdown-in-html', 'tables'])
+        return html, {}
 
-def get_html_from_dict_with_source(item: dict) -> 'tuple[str, dict]':
+def get_html_from_dict_with_source(
+        item: dict,
+        markdown_pipe: Union[str, None]
+    ) -> 'tuple[str, dict]':
     """
     Retrieves HTML from a markdown source file.
 
@@ -118,13 +137,19 @@ def get_html_from_dict_with_source(item: dict) -> 'tuple[str, dict]':
         str: HTML result from a markdown file.
         dict: Object for storage of the file's details for later processing.
     """
-    html = markdown_path(
-        item['source'],
-        extras=['fenced-code-blocks', 'markdown-in-html', 'tables']
-    )
-    return html, item
+    with open(item['source'], 'r') as markdown_file:
+        text = markdown_file.read()
+        text = apply_pipe(text, markdown_pipe)
+        html = markdown(
+            text,
+            extras=['fenced-code-blocks', 'markdown-in-html', 'tables']
+        )
+        return html, item
 
-def get_html_from_dict_with_sources(item: dict) -> 'tuple[str, dict]':
+def get_html_from_dict_with_sources(
+        item: dict,
+        markdown_pipe: Union[str, None]
+    ) -> 'tuple[str, dict]':
     """
     Retrieves HTML from one or more markdown source files.
 
@@ -142,11 +167,16 @@ def get_html_from_dict_with_sources(item: dict) -> 'tuple[str, dict]':
             markdown_text += '\n\n'
         is_first = False
         with open(source, 'r') as markdown_file:
-            markdown_text += markdown_file.read()
+            file_text = markdown_file.read()
+            file_text = apply_pipe(file_text, markdown_pipe)
+            markdown_text += file_text
     html = markdown(markdown_text, extras=['fenced-code-blocks', 'markdown-in-html', 'tables'])
     return html, item
 
-def get_html_from_dict_with_source_directory(item: dict) -> 'tuple[str, dict]':
+def get_html_from_dict_with_source_directory(
+        item: dict,
+        markdown_pipe: Union[str, None]
+    ) -> 'tuple[str, dict]':
     """
     Retrieves HTML from a directory of markdown source files.
 
@@ -168,9 +198,27 @@ def get_html_from_dict_with_source_directory(item: dict) -> 'tuple[str, dict]':
                 markdown_text += '\n\n'
             is_first = False
             with open(filename, 'r') as markdown_file:
-                markdown_text += markdown_file.read()
+                file_text = markdown_file.read()
+                file_text = apply_pipe(file_text, markdown_pipe)
+                markdown_text += file_text
     html = markdown(markdown_text, extras=['fenced-code-blocks', 'markdown-in-html', 'tables'])
     return html, item
+
+def apply_pipe(markdown_text: str, pipe: Union[str, None]) -> str:
+    """
+    Applies a pipe command to a markdown file and returns output.
+
+    Args:
+        markdown_text (str): Markdown file to be modified.
+        pipe (Union[str, None]): Pipe command, or None if no pipe.
+
+    Returns:
+        str: Piped markdown result.
+    """
+    if pipe is None:
+        return markdown_text
+    pipe_output = subprocess.check_output(pipe, input=bytearray(markdown_text, 'utf-8'))
+    return pipe_output.decode('utf-8')
 
 def wrap_with_tag(html: str, document_wrapper_class: str) -> str:
     """

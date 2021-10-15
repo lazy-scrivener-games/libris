@@ -20,11 +20,19 @@ def build_pdf(config: dict) -> None:
     default_style_key = config.get('defaultStyle')
     document_wrapper_class = config.get('documentWrapperClass')
     output_file_path = config['output']
-    html_data = get_html_data(sources, document_wrapper_class)
+    markdown_pipe = config.get('markdownPipe', None)
+    html_data = get_html_data(sources, document_wrapper_class, markdown_pipe)
     css_data = get_css_data(styles)
     decorator_data = get_decorator_data_from_styles_dict(styles)
     default_style = get_default_style(default_style_key, css_data)
-    generate_pdf(html_data, css_data, decorator_data, default_style, default_style_key, output_file_path)
+    generate_pdf(
+        html_data,
+        css_data,
+        decorator_data,
+        default_style,
+        default_style_key,
+        output_file_path
+    )
 
 def generate_pdf(
         html_data: list,
@@ -32,7 +40,8 @@ def generate_pdf(
         decorator_data: dict,
         default_style: Union[list, None],
         default_style_key: Union[str, None],
-        output_file_path: str) -> None:
+        output_file_path: str
+    ) -> None:
     """
     Creates and writes a PDF from a list of source data and config options.
 

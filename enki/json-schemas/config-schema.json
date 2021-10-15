@@ -28,6 +28,10 @@
         "documentWrapperClass": {
             "description": "Wraps the entire document in a div with the given class name.",
             "type": "string"
+        },
+        "markdownPipe": {
+            "description": "Pipe to run all markdown files through.",
+            "type": "string"
         }
     },
     "required": [
