@@ -79,7 +79,6 @@ def get_output_from_source(
     html, item_output = get_html_from_source(item, markdown_pipe)
     if document_wrapper_class:
         html = wrap_with_tag(html, document_wrapper_class)
-    print(html)
     html_object = HTML(string=html, base_url='.')
     item_output['html'] = html_object
     return item_output
