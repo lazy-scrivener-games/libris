@@ -8,12 +8,13 @@ from .data_extractors import (
     get_css_data, get_decorator_data_from_styles_dict, get_default_style, get_html_data
 )
 
-def build_pdf(config: dict) -> None:
+def build_pdf(config: dict, be_verbose: bool) -> None:
     """
     Builds a PDF from Markdown based on a standardized configuration file.
 
     Args:
         config (dict): Configuration data to use for PDF generation.
+        be_verbose (bool): Whether to print additional debugging information.
     """
     sources = config['sources']
     styles = config.get('styles', {})
@@ -21,7 +22,7 @@ def build_pdf(config: dict) -> None:
     document_wrapper_class = config.get('documentWrapperClass')
     output_file_path = config['output']
     markdown_pipe = config.get('markdownPipe', None)
-    html_data = get_html_data(sources, document_wrapper_class, markdown_pipe)
+    html_data = get_html_data(sources, document_wrapper_class, markdown_pipe, be_verbose)
     css_data = get_css_data(styles)
     decorator_data = get_decorator_data_from_styles_dict(styles)
     default_style = get_default_style(default_style_key, css_data)

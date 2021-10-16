@@ -12,8 +12,9 @@ class WatchEventHandler(FileSystemEventHandler):
     """
     Event handler for the watch function.
     """
-    def __init__(self, config_path: str):
+    def __init__(self, config_path: str, be_verbose: bool):
         self.config_path = config_path
+        self.be_verbose = be_verbose
         super().__init__()
 
     def on_any_event(self, event):
@@ -22,17 +23,18 @@ class WatchEventHandler(FileSystemEventHandler):
         """
         print('Files changed, recompiling...')
         config = get_json_data(self.config_path)
-        build_pdf(config)
+        build_pdf(config, self.be_verbose)
 
-def watch(config_file_path: str):
+def watch(config_file_path: str, be_verbose: bool):
     """
     Watches the config file and all referenced files and re-builds the PDF whenever they change.
 
     Args:
         config_file_path (str): The configuration file path.
+        be_verbose (bool): Whether to print debugging information.
     """
     observer = Observer()
-    handler = WatchEventHandler(config_file_path)
+    handler = WatchEventHandler(config_file_path, be_verbose)
     try:
         while True:
             observer = watch_loop_iteration(observer, handler, config_file_path)

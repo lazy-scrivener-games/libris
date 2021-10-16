@@ -15,7 +15,7 @@ from .lib.data_extractors import get_json_data
 from .lib.pdf_builder import build_pdf
 from .lib.watch import watch
 
-def main(config_file_path: str, should_watch: bool):
+def main(config_file_path: str, should_watch: bool, be_verbose: bool):
     """
     Builds a PDF from a JSON configuration file that points to various Markdown source files.
     Optionally watches for changes.
@@ -23,16 +23,17 @@ def main(config_file_path: str, should_watch: bool):
     Args:
         config_file (str): The configuration file to be used.
         should_watch (bool): Whether to watch the source files for changes and re-compile.
+        be_verbose (bool): Whether to print debugging information.
     """
     try:
         config = get_config_and_validate(config_file_path)
     except jsonschema.exceptions.ValidationError as err:
         terminate_with_validation_error(err)
     if should_watch:
-        build_pdf(config)
-        watch(config_file_path)
+        build_pdf(config, be_verbose)
+        watch(config_file_path, be_verbose)
     else:
-        build_pdf(config)
+        build_pdf(config, be_verbose)
 
 def get_config_and_validate(config_file_path: str) -> dict:
     """
@@ -69,9 +70,9 @@ def handle_args() -> str:
         str: The configuration file to be used for constructing the PDF.
     """
     parser = argparse.ArgumentParser(
-        prog='python3 -m enki',
+        prog='enki',
         description='Builds a PDF from a JSON configuration file that points to various Markdown'\
-        'source files.'
+        ' source files.'
     )
     parser.add_argument(
         'config_file',
@@ -79,13 +80,19 @@ def handle_args() -> str:
         help='A JSON file that specifies how to build the PDF. View the full docs for details.'
     )
     parser.add_argument(
-        '--watch',
         '-w',
+        '--watch',
         action='store_true',
         help='Watch the source files and re-compile on changes.'
+    )
+    parser.add_argument(
+        '-v',
+        '--verbose',
+        action='store_true',
+        help='Prints additional logging data, including intermediate HTML.'
     )
     return parser.parse_args()
 
 if __name__ == '__main__':
     arguments = handle_args()
-    main(arguments.config_file, arguments.watch)
+    main(arguments.config_file, arguments.watch, arguments.verbose)

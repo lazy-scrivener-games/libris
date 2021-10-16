@@ -21,6 +21,18 @@ Enki is a Markdown to PDF conversion tool that collates multiple Markdown files 
 * Run `enki <CONFIG_FILE_PATH>`
 * Check the resulting PDF output!
 
-## Options
+## Usage
 
-* Adding `--watch` or `-w` will watch the config file and all files it points to, re-building the PDF whenever they change. Example: `python3 -m enki --watch example/example-config.json`
+```
+usage: enki [-h] [-w] [-v] config_file
+
+Builds a PDF from a JSON configuration file that points to various Markdown source files.
+
+positional arguments:
+  config_file    A JSON file that specifies how to build the PDF. View the full docs for details.
+
+optional arguments:
+  -h, --help     show this help message and exit
+  -w, --watch    Watch the source files and re-compile on changes.
+  -v, --verbose  Prints additional logging data, including intermediate HTML.
+```

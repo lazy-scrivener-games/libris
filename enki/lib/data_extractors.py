@@ -43,28 +43,33 @@ def get_default_style(default_style_key: str, css_data: dict) -> Union[list, Non
 def get_html_data(
         sources: list,
         document_wrapper_class: str,
-        markdown_pipe: Union[str, None]
+        markdown_pipe: Union[str, None],
+        be_verbose: bool
     ) -> list:
     """
-    Retrieves Weasyprint HTML objects based on a list of Markdown filenames
+    Retrieves Weasyprint HTML objects based on a list of Markdown sources
 
     Args:
-        sources (list): List of source Markdown files to use
+        sources (list): List of source Markdown sources to use
         document_wrapper_class (str): Optional class in which to wrap resulting document.
+        markdown_pipe (str): Transformative command to run. HTML will be passed to command as
+            stdin and the command's stdout output will be used instead of the raw HTML.
+        be_verbose (bool): Whether to print additional debugging information.
 
     Returns:
         list: List of dictionaries containing original configuration plus Weasyprint HTML objects.
     """
     output = []
     for item in sources:
-        item_output = get_output_from_source(item, document_wrapper_class, markdown_pipe)
+        item_output = get_output_from_source(item, document_wrapper_class, markdown_pipe, be_verbose)
         output.append(item_output)
     return output
 
 def get_output_from_source(
         item: Union[dict, str],
         document_wrapper_class: str,
-        markdown_pipe: Union[str, None]
+        markdown_pipe: Union[str, None],
+        be_verbose: bool
     ) -> dict:
     """
     Gets a source configuration dictionary from a source dictionary or string.
@@ -72,6 +77,7 @@ def get_output_from_source(
     Args:
         item (Union[dict, str]): Source configuration dictionary or string
         document_wrapper_class (str): Optional div class with which to wrap HTML.
+        be_verbose (bool): Whether to print additional debugging information.
 
     Returns:
         dict: Configuration dictionary with parsed HTML.
@@ -79,6 +85,8 @@ def get_output_from_source(
     html, item_output = get_html_from_source(item, markdown_pipe)
     if document_wrapper_class:
         html = wrap_with_tag(html, document_wrapper_class)
+    if be_verbose:
+        print(html)
     html_object = HTML(string=html, base_url='.')
     item_output['html'] = html_object
     return item_output
