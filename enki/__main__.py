@@ -10,10 +10,10 @@ import argparse
 import os
 import sys
 import jsonschema
-from .lib.constants import JSON_SCHEMA_PATH
-from .lib.data_extractors import get_json_data
-from .lib.pdf_builder import build_pdf
-from .lib.watch import watch
+from enki.lib.constants import JSON_SCHEMA_PATH
+from enki.lib.data_extractors import get_json_data
+from enki.lib.pdf_builder import build_pdf
+from enki.lib.watch import watch
 
 def main(config_file_path: str, should_watch: bool, be_verbose: bool):
     """

@@ -4,8 +4,12 @@ Defines the core PDF building functions for enki.
 from typing import Union
 import jinja2 
 from weasyprint import HTML, Document
-from .data_extractors import (
-    get_css_data, get_decorator_data_from_styles_dict, get_default_style, get_html_data
+from enki.lib.data_extractors import (
+    get_css_data,
+    get_decorator_data_from_styles_dict,
+    get_default_style,
+    get_html_data,
+    get_element
 )
 
 def build_pdf(config: dict, be_verbose: bool) -> None:
@@ -104,16 +108,36 @@ def add_decorators(pdf: Document, decorator_data: list, count: int, variables: d
     """
     for page in pdf.pages:
         for decorator in decorator_data:
-            final_html_string = process_decorator_template(decorator['html'], count, variables)
-            html = HTML(string=final_html_string, base_url='.')
-            stylesheets = get_stylesheets_for_decorator(decorator, count)
-            doc = html.render(stylesheets=stylesheets)
-            decorator_page = doc.pages[0]
-            decorator_body = get_element(decorator_page._page_box.all_children(), 'body')
-            decorator = decorator_body.copy_with_children(decorator_body.all_children())
-            body = get_element(page._page_box.all_children(), 'body')
-            body.children += decorator_body.all_children()
+            if 'cachedBody' in decorator:
+                decorator_body = decorator['cachedBody']
+                decorator_body_copy = decorator_body.copy_with_children(
+                    decorator_body.all_children()
+                )
+                body = get_element(page._page_box.all_children(), 'body')
+                body.children += decorator_body_copy.all_children()
+            else:
+                add_decorator_with_variable_elements(page, decorator, count, variables)
         count += 1
+
+def add_decorator_with_variable_elements(page: any, decorator: dict, count: int, variables: dict):
+    """
+    Adds a decorator that uses template variables to a Weasyprint document.
+
+    Args:
+        page (any): PDF page. Type unknown.
+        decorator (dict): Decorator data.
+        count (int): Page count.
+        varibles (dict): Variables to be applied to decorator
+    """
+    final_html_string = process_decorator_template(decorator['html'], count, variables)
+    html = HTML(string=final_html_string, base_url='.')
+    stylesheets = get_stylesheets_for_decorator(decorator, count)
+    doc = html.render(stylesheets=stylesheets)
+    decorator_page = doc.pages[0]
+    decorator_body = get_element(decorator_page._page_box.all_children(), 'body')
+    decorator = decorator_body.copy_with_children(decorator_body.all_children())
+    body = get_element(page._page_box.all_children(), 'body')
+    body.children += decorator_body.all_children()
 
 def get_stylesheets_for_decorator(decorator: dict, count: int) -> list:
     """
@@ -148,24 +172,6 @@ def process_decorator_template(template: str, count: int, variables: dict) -> st
     variables['pageNumber'] = count
     template_object = jinja2.Template(template)
     return template_object.render(variables)
-
-def get_element(boxes: any, element: str) -> any:
-    """
-    Gets a named element of a Weasyprint Document.
-
-    Args:
-        boxes (any): Retrieved by querying a Weasyprint Document object with
-            .pages[n]._page_box.all_children()
-        element (str): Name of the sub-element to find.
-
-    Returns:
-        (any): Named sub-element of the given input.
-    """
-    for box in boxes:
-        if box.element_tag == element:
-            return box
-        return get_element(box.all_children(), element)
-
 
 def gather_pages(pdfs: list) -> list:
     """

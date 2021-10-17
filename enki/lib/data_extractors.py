@@ -344,7 +344,8 @@ def get_decorator_data(decorator: dict) -> dict:
     """
     Takes a schema-defined decorator object and outputs HTML and CSS data for that decorator.
 
-    Args: decorator(dict): Schema-defined decorator object.
+    Args:
+        decorator(dict): Schema-defined decorator object.
 
     Returns:
         dict: Dictionary containing 'html' and 'css' keys for that decorator.
@@ -355,8 +356,43 @@ def get_decorator_data(decorator: dict) -> dict:
         'html': html,
         'css': CSS(filename=decorator['stylesheet'])
     }
+    if '{{' not in html:
+        output['cachedBody'] = get_cacheable_decorator_body(output)
     if 'evenStylesheet' in decorator:
         output['evenCss'] = CSS(filename=decorator['evenStylesheet'])
     if 'oddStylesheet' in decorator:
         output['oddCss'] = CSS(filename=decorator['oddStylesheet'])
     return output
+
+def get_cacheable_decorator_body(decorator_data: dict) -> any:
+    """
+    Takes decorator data and returns PDF data for later use.
+
+    Args:
+        decorator_data (dict): Contains html and css keys to use.
+
+    Returns:
+        any: Unknown data type. Body element of decorator PDF page.
+    """
+    html = HTML(string=decorator_data['html'], base_url='.')
+    doc = html.render(stylesheets=[decorator_data['css']])
+    decorator_page = doc.pages[0]
+    decorator_body = get_element(decorator_page._page_box.all_children(), 'body')
+    return decorator_body
+
+def get_element(boxes: any, element: str) -> any:
+    """
+    Gets a named element of a Weasyprint Document.
+
+    Args:
+        boxes (any): Retrieved by querying a Weasyprint Document object with
+            .pages[n]._page_box.all_children()
+        element (str): Name of the sub-element to find.
+
+    Returns:
+        (any): Named sub-element of the given input.
+    """
+    for box in boxes:
+        if box.element_tag == element:
+            return box
+        return get_element(box.all_children(), element)
