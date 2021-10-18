@@ -21,6 +21,7 @@ setup(
         'beautifulsoup4 == 4.10.0',
         'idna == 2.6',
         'Jinja2 == 3.0.2',
+        'jsonpointer == 1.10',
         'jsonschema == 4.0.0',
         'markdown2 == 2.4.1',
         'watchdog == 2.1.6',
