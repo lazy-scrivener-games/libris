@@ -32,7 +32,8 @@ positional arguments:
   config_file    A JSON file that specifies how to build the PDF. View the full docs for details.
 
 optional arguments:
-  -h, --help     show this help message and exit
-  -w, --watch    Watch the source files and re-compile on changes.
-  -v, --verbose  Prints additional logging data, including intermediate HTML.
+  -h, --help          show this help message and exit
+  -w, --watch         Watch the source files and re-compile on changes.
+  -v, --verbose       Prints additional logging data, including intermediate HTML.
+  -n, --no-validation Skips JSON validation. Use this if you are getting URL resolution errors.
 ```
