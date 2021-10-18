@@ -18,7 +18,7 @@ All properties are optional unless otherwise specified.
 | --- | --- | --- |
 | output | string | REQUIRED. File path to which to write PDF output. |
 | sources | array of [source](#source) | REQUIRED. List of markdown files to be included in PDF output. Each source will have an added page break after it. |
-| styles | object with values of type [style](#styles) | List of style definitions for PDF. |
+| styles | object with values of type [style](#style) | List of style definitions for PDF. |
 | defaultStyle | string | Default style to use when a style is not defined for a source. |
 | documentWrapperClass | string | If each document needs to be wrapped in a div of a particular CSS class, specify the class name(s) in a string here. If multiple, separate them by spaces. |
 | markdownPipe | string | Pipe to run all markdown through. Markdown will be passed to the command given here as stdin and stdout will be sent to the PDF generation code. |
