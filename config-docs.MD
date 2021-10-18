@@ -50,7 +50,7 @@ You can give a style as a simple string that is the path to the CSS file to use,
 
 Decorators, as described in the [Overview](#overview), are additional content applied to each page of a document source individually. You can specify variables in the [variables](#source) property of the source configuration object. Variable are interpolated using double curly brace syntax, i.e. `{{ variableName }}`. There is also a built-in variable for page numbers, which can be interpolated using `{{ pageNumber }}`.
 
-Variables are likely unnecessary in many cases, but one use case for variables is to apply a similar footer for many sections of the document, but put a chapter title in that footer that is specific to each section defined by a source object.
+Custom variables are likely unnecessary in many cases, but one use case for variables is to apply a similar footer for many sections of the document and put a chapter title in that footer that is specific to each section defined by a source object.
 
 | Property Name | Type | Description |
 | --- | --- | --- |
