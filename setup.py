@@ -4,7 +4,7 @@ setup(
     version='1.0.0',
     description='PDF generator that uses Markdown sources.',
     url='https://github.com/lazy-scrivener-games/libris',
-    download_url='FILL_THIS_OUT_____________________________________________________________',
+    download_url='https://github.com/lazy-scrivener-games/libris/archive/refs/tags/v1.0.tar.gz',
     author='Chris Muller',
     author_email='chris@lazyscrivenergames.com',
     keywords=[
