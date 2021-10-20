@@ -1,0 +1,11 @@
+{
+    "$schema": "http://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/lazy-scrivener-games/libris/json-schemas/sources-schema.json",
+    "title": "LibrisSources",
+    "description": "A list of sources for a LibrisConfig.",
+    "type": "array",
+    "items": {
+        "$ref": "./source-schema.json"
+    },
+    "minItems": 1
+}

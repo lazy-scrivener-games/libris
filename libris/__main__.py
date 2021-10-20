@@ -1,7 +1,7 @@
 """
 Builds a PDF from a JSON configuration file that points to various Markdown source files.
 
-usage: enki <configuration_file>
+usage: libris <configuration_file>
 
 Where <configuration_file> is a JSON file that specifies how to build the PDF. View the full docs
 for details.
@@ -73,7 +73,7 @@ def handle_args() -> str:
         str: The configuration file to be used for constructing the PDF.
     """
     parser = argparse.ArgumentParser(
-        prog='enki',
+        prog='libris',
         description='Builds a PDF from a JSON configuration file that points to various Markdown'\
         ' source files.'
     )

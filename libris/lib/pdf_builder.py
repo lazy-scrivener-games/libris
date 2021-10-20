@@ -1,5 +1,5 @@
 """
-Defines the core PDF building functions for enki.
+Defines the core PDF building functions for libris.
 """
 from typing import Union
 import jinja2 
