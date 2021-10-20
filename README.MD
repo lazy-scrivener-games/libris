@@ -8,15 +8,10 @@ Libris is a Markdown to PDF conversion tool that collates multiple Markdown file
 * If anyone figures out how to get Weasyprint working with Windows, that'd be great. Otherwise, the answer is WSL.
 * Python 3.6+
 
-## Setup
+## Debian/Linux Setup
 
-* Refresh your package manager's package list
-  * On Debian/Ubuntu, run `sudo apt update`
-* Install WeasyPrint
-    * On Debian/Ubuntu, run `sudo apt install build-essential python3-dev python3-pip python3-setuptools python3-wheel python3-cffi libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf2.0-0 libffi-dev shared-mime-info`.
-    * For other platforms, see [WeasyPrint's documentation](https://doc.courtbouillon.org/weasyprint/v52.5/install.html) for more details.
-* Install BeautifulSoup
-    * On Debian/Ubuntu, run `sudo apt install python3-bs4`.
+* Run `sudo apt update`
+* Run `sudo apt install build-essential python3-dev python3-pip python3-setuptools python3-wheel python3-cffi libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf2.0-0 libffi-dev shared-mime-info python3-bs4`
 * Install the module using `pip install libris`
 
 ## Basic Usage
