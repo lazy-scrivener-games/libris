@@ -1,3 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env python
 
-python3 -m libris "$@"
+from libris.__main__ import main, handle_args
+
+if __name__  == '__main__':
+    arguments = handle_args()
+    main(arguments.config_file, arguments.watch, arguments.verbose, arguments.no_validation)
