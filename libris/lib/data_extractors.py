@@ -1,5 +1,5 @@
 """
-Configuration data extraction functions for Enki.
+Configuration data extraction functions for libris.
 """
 import json
 import os

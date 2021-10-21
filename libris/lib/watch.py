@@ -1,5 +1,5 @@
 """
-Watch functionality for enki.
+Watch functionality for libris.
 """
 import os
 import time

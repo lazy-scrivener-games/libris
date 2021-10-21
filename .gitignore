@@ -1,3 +1,6 @@
 __pycache__
 *.pyc
-example/output.pdf
+*.pdf
+build
+dist
+*.egg-info
