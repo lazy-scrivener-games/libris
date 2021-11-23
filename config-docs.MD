@@ -2,7 +2,7 @@
 
 ## <a name="overview">Overview</a>
 
-Libris uses a JSON configuration file to allow it to accept a variety of inputs and collate them together into a single PDF document. Configuration files are validated using [JSON Schema](https://json-schema.org/) and must match the schema file found at https://github.com/lazy-scrivener-games/libris/json-schemas/config-schema.json.
+Libris uses a JSON configuration file to allow it to accept a variety of inputs and collate them together into a single PDF document. Configuration files are validated using [JSON Schema](https://json-schema.org/) and must match the schema file found at [libris/json-schemas/config-schema.json](https://raw.githubusercontent.com/lazy-scrivener-games/libris/main/libris/json-schemas/config-schema.json).
 
 Styles are defined and attached to strings so that they can be easily referenced. This is because a style might encompass multiple CSS stylesheets, and/or might use the templating option we call "decorators."
 
