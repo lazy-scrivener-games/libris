@@ -33,7 +33,7 @@ Libris is a Markdown to PDF conversion tool that collates multiple Markdown file
 
 -   Have Docker installed
 -   Run `docker build -t libris .`
--   Run `docker run -it --name libris libris`
+-   Run `docker run -it --name libris libris bash`
 
 ## Known Issues
 
