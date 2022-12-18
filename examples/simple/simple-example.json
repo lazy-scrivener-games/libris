@@ -1,5 +1,5 @@
 {
-    "$schema": "https://github.com/lazy-scrivener-games/libris/json-schemas/config-schema.json",
+    "$schema": "https://lazyscrivenergames.com/jsons/config-schema.json",
     "sources": [
         "chapter1.md",
         "chapter2.md",
