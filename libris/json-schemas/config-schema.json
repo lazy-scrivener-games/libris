@@ -11,11 +11,11 @@
         },
         "sources": {
             "description": "Markdown files to be included in PDF output.",
-            "$ref": "./sources-schema.json"
+            "$ref": "https://lazyscrivenergames.com/jsons/sources-schema.json"
         },
         "styles": {
             "description": "Style definitions for PDF.",
-            "$ref": "./styles-schema.json"
+            "$ref": "https://lazyscrivenergames.com/jsons/styles-schema.json"
         },
         "defaultStyle": {
             "description": "Default style for markdown files.",

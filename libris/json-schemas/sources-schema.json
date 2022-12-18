@@ -5,7 +5,7 @@
     "description": "A list of sources for a LibrisConfig.",
     "type": "array",
     "items": {
-        "$ref": "./source-schema.json"
+        "$ref": "https://lazyscrivenergames.com/jsons/source-schema.json"
     },
     "minItems": 1
 }

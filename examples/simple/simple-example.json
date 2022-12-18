@@ -10,10 +10,7 @@
     ],
     "styles": {
         "basic": "style1.css",
-        "advanced": [
-            "style1.css",
-            "style2.css"
-        ]
+        "advanced": ["style1.css", "style2.css"]
     },
     "defaultStyle": "basic",
     "output": "output.pdf"

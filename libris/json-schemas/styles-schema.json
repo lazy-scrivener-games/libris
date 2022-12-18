@@ -5,6 +5,7 @@
     "description": "A list of styles for an LibrisConfig.",
     "type": "object",
     "additionalProperties": {
-        "$ref": "./style-schema.json"
+        "type": ["string", "array", "object"],
+        "$ref": "https://lazyscrivenergames.com/jsons/style-schema.json"
     }
 }

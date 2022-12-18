@@ -4,7 +4,9 @@
     "title": "LibrisStyle",
     "description": "A style definition for a libris configuration file.",
     "type": ["string", "array", "object"],
-    "items": "string",
+    "items": {
+        "type": "string"
+    },
     "properties": {
         "stylesheet": {
             "description": "Stylesheet to be used for this style.",
@@ -19,13 +21,13 @@
         },
         "decorator": {
             "description": "Decorator definition for this style.",
-            "$ref": "./decorator-schema.json"
+            "$ref": "https://lazyscrivenergames.com/jsons/decorator-schema.json"
         },
         "decorators": {
             "description": "List of decorator definitions for this style.",
             "type": "array",
             "items": {
-                "$ref": "./decorator-schema.json"
+                "$ref": "https://lazyscrivenergames.com/jsons/decorator-schema.json"
             }
         }
     },
