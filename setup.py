@@ -1,7 +1,7 @@
 from setuptools import setup
 setup(
     name='libris',
-    version='1.1.0',
+    version='1.3.0',
     description='PDF generator that uses Markdown sources.',
     url='https://github.com/lazy-scrivener-games/libris',
     download_url='https://github.com/lazy-scrivener-games/libris/archive/refs/tags/v1.1.tar.gz',

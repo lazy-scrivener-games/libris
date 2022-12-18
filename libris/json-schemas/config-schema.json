@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft/2020-12/schema",
-    "$id": "https://github.com/lazy-scrivener-games/libris/json-schemas/config-schema.json",
-    "title":  "LibrisConfig",
+    "$id": "https://lazyscrivenergames.com/jsons/config-schema.json",
+    "title": "LibrisConfig",
     "description": "The overall configuration object for a libris run",
     "type": "object",
     "properties": {
@@ -34,9 +34,6 @@
             "type": "string"
         }
     },
-    "required": [
-        "sources",
-        "output"
-    ],
+    "required": ["sources", "output"],
     "additionalProperties": false
 }

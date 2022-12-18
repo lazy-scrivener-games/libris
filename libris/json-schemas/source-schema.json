@@ -1,12 +1,9 @@
 {
     "$schema": "http://json-schema.org/draft/2020-12/schema",
-    "$id": "https://github.com/lazy-scrivener-games/libris/json-schemas/source-schema.json",
+    "$id": "https://lazyscrivenergames.com/jsons/source-schema.json",
     "title": "LibrisSource",
     "description": "A markdown source definition for an libris configuration file.",
-    "type": [
-        "object",
-        "string"
-    ],
+    "type": ["object", "string"],
     "properties": {
         "source": {
             "description": "Markdown file to be included in PDF output.",
@@ -38,21 +35,15 @@
         },
         {
             "type": "object",
-            "required": [
-                "source"
-            ]
+            "required": ["source"]
         },
         {
             "type": "object",
-            "required": [
-                "sources"
-            ]
+            "required": ["sources"]
         },
         {
             "type": "object",
-            "required": [
-                "sourceDirectory"
-            ]
+            "required": ["sourceDirectory"]
         }
     ],
     "additionalProperties": false

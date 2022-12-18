@@ -1,11 +1,9 @@
 {
     "$schema": "http://json-schema.org/draft/2020-12/schema",
-    "$id": "https://github.com/lazy-scrivener-games/libris/json-schemas/decorator-schema.json",
+    "$id": "https://lazyscrivenergames.com/jsons/decorator-schema.json",
     "title": "LibrisDecorator",
     "description": "A decorator definition for a libris configuration file.",
-    "type": [
-        "object"
-    ],
+    "type": ["object"],
     "properties": {
         "template": {
             "description": "HTML template to be used as the decorator template.",
@@ -24,9 +22,6 @@
             "type": "string"
         }
     },
-    "required": [
-        "template",
-        "stylesheet"
-    ],
+    "required": ["template", "stylesheet"],
     "additionalProperties": false
 }

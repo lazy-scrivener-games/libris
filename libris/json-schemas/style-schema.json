@@ -1,13 +1,9 @@
 {
     "$schema": "http://json-schema.org/draft/2020-12/schema",
-    "$id": "https://github.com/lazy-scrivener-games/libris/json-schemas/style-schema.json",
+    "$id": "https://lazyscrivenergames.com/jsons/style-schema.json",
     "title": "LibrisStyle",
     "description": "A style definition for a libris configuration file.",
-    "type": [
-        "string",
-        "array",
-        "object"
-    ],
+    "type": ["string", "array", "object"],
     "items": "string",
     "properties": {
         "stylesheet": {
@@ -38,15 +34,11 @@
             "oneOf": [
                 {
                     "type": "object",
-                    "required": [
-                        "stylesheet"
-                    ]
+                    "required": ["stylesheet"]
                 },
                 {
                     "type": "object",
-                    "required": [
-                        "stylesheets"
-                    ]
+                    "required": ["stylesheets"]
                 },
                 {
                     "type": "string"
@@ -60,15 +52,11 @@
             "oneOf": [
                 {
                     "type": "object",
-                    "required": [
-                        "decorator"
-                    ]
+                    "required": ["decorator"]
                 },
                 {
                     "type": "object",
-                    "required": [
-                        "decorators"
-                    ]
+                    "required": ["decorators"]
                 },
                 {
                     "type": "string"
